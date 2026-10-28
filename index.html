@@ -25,10 +25,9 @@ for(const gantry of gantries){
  if(!state.showGaps)continue;
  const machines=state.items.filter(a=>a.visible!==false&&a!==gantry&&a.type!=='gantry'&&a.type!=='label'&&ownerGantry(a)===gantry).sort((a,b)=>a.x-b.x);
  for(let i=0;i<machines.length-1;i++){const a=machines[i],b=machines[i+1],gap=b.x-(a.x+a.w);if(gap>.12&&Math.abs((a.y+a.h/2)-(b.y+b.h/2))<Math.max(a.h,b.h)*2){const yy=Math.min(a.y,b.y,gantry.y)-1.05-(i%2)*.5;dim(svg,a.x+a.w,yy,b.x,yy,fmt(gap)+' m')}}
- machines.forEach((a,i)=>{const cx=a.x+a.w/2,cy=a.y+a.h/2;const topGap=a.y-gantry.y,bottomGap=gantry.y+gantry.h-(a.y+a.h);const xx=a.x+(i%2===0?.12:a.w-.12),offset=i%2===0?-.32:.32;
-if(cx>=gantry.x&&cx<=gantry.x+gantry.w){
- if(topGap>.12){const lane=xx+offset;extension(xx,gantry.y,lane,gantry.y);extension(xx,a.y,lane,a.y);dim(svg,lane,gantry.y,lane,a.y,fmt(topGap)+' m')}
- if(bottomGap>.12){const lane=xx+offset;extension(xx,a.y+a.h,lane,a.y+a.h);extension(xx,gantry.y+gantry.h,lane,gantry.y+gantry.h);dim(svg,lane,a.y+a.h,lane,gantry.y+gantry.h,fmt(bottomGap)+' m')}
+ machines.forEach((a,i)=>{const cx=a.x+a.w/2,cy=a.y+a.h/2;const topGap=a.y-gantry.y,bottomGap=gantry.y+gantry.h-(a.y+a.h);if(cx>=gantry.x&&cx<=gantry.x+gantry.w){
+ if(topGap>.12)dim(svg,cx,gantry.y,cx,a.y,fmt(topGap)+' m');
+ if(bottomGap>.12)dim(svg,cx,a.y+a.h,cx,gantry.y+gantry.h,fmt(bottomGap)+' m');
 }
 const leftGap=a.x-(gantry.x+gantry.w),rightGap=gantry.x-(a.x+a.w);
 if(cy>=gantry.y&&cy<=gantry.y+gantry.h){
